@@ -1,0 +1,27 @@
+class Solution {
+    public int maxRotateFunction(int[] nums) {
+        int arraySum = 0;
+        for (int i : nums) {
+            arraySum += i;
+        }
+        int[] dp = new int[nums.length];
+        dp[0] = findSum(nums, 0);
+        int result = dp[0];
+        for (int i = 1; i < nums.length; i++) {
+            int rotationIndex = nums.length - i;
+            dp[i] = dp[i - 1] + (arraySum - nums[rotationIndex]) - ((nums.length - 1) * nums[rotationIndex]);
+            result = Math.max(result, dp[i]);
+        }
+        return result;
+    }
+    
+    public int findSum(int[] nums, int rotation) {
+        int sum = 0;
+        for (int i = rotation; i < nums.length + rotation; i++) {
+            sum += (i % nums.length) * nums[i - rotation];
+        }
+        return sum;
+    }
+}
+
+--- Submission Link : https://leetcode.com/problems/rotate-function/submissions/ ---
